@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">My Finance Manager</string>
+    <string name="add_expense">Adicionar despesa</string>
+    <string name="add_revenue">Adicionar receita</string>
+    <string name="expense">Despesa</string>
+    <string name="revenue">Receita</string>
+    <string name="value">Valor</string>
+    <string name="description">Descrição</string>
+    <string name="date">Data</string>
+    <string name="expense_was_paid">Despesa foi paga?</string>
+    <string name="add">Adicionar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="cash">R$</string>
+
+    <string name="empty_value">Preencha o campo valor</string>
+    <string name="empty_description">Preencha o campo valor</string>
+    <string name="empty_date">Selecione uma data</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

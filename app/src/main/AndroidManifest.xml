@@ -10,7 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyFinanceManager">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.revenue.AddRevenueActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.expense.AddExpenseActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.home.MainActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.splash.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -54,6 +54,7 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+
         <TextView
             android:id="@+id/txt_forget_password"
             android:layout_width="wrap_content"
@@ -76,6 +77,13 @@
             android:layout_marginTop="10dp"
             android:text="@string/register"
             android:textAlignment="center" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:visibility="gone"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 

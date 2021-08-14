@@ -1,5 +1,7 @@
 package com.matheussilas97.myfinancemanager.util
 
+import android.content.Context
+import android.content.Intent
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,10 +13,14 @@ abstract class BaseFragment : Fragment() {
         Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
     }
 
-    fun setNoResultAdapter(recyclerView: RecyclerView, message: String) {
+    fun getNextActivity(activity: Class<*>) {
+        startActivity(Intent(requireContext(), activity))
+    }
+
+    fun setNoResultAdapter(recyclerView: RecyclerView, message: String, context: Context) {
         val layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        recyclerView.adapter = NoResultAdapter(requireContext(), message)
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        recyclerView.adapter = NoResultAdapter(context, message)
         recyclerView.layoutManager = layoutManager
     }
 

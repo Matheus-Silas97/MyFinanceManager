@@ -14,7 +14,7 @@
             android:id="@+id/imgIcon"
             android:layout_width="140dp"
             android:layout_height="90dp"
-            android:src="@drawable/ic_launcher_background" />
+            android:src="@drawable/no_money" />
 
         <TextView
             android:id="@+id/tvTitle"

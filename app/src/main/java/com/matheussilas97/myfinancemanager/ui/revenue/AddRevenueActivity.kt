@@ -2,6 +2,7 @@ package com.matheussilas97.myfinancemanager.ui.revenue
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.matheussilas97.myfinancemanager.databinding.ActivityAddRevenueBinding
@@ -20,6 +21,7 @@ class AddRevenueActivity : BaseActivity() {
         viewModel = ViewModelProvider(this)[RevenueViewModel::class.java]
 
         onClick()
+        observer()
     }
 
     private fun addRevenue() {
@@ -50,5 +52,15 @@ class AddRevenueActivity : BaseActivity() {
         binding.editDate.setOnClickListener {
             openCalendar(binding.editDate, this)
         }
+    }
+
+    private fun observer() {
+        viewModel.loading.observe(this, Observer {
+            if (it) {
+                binding.progressBar.visibility = View.VISIBLE
+            } else {
+                binding.progressBar.visibility = View.GONE
+            }
+        })
     }
 }

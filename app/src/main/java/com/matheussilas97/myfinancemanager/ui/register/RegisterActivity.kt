@@ -2,8 +2,11 @@ package com.matheussilas97.myfinancemanager.ui.register
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.ktx.Firebase
 import com.matheussilas97.myfinancemanager.R
 import com.matheussilas97.myfinancemanager.databinding.ActivityRegisterBinding
 import com.matheussilas97.myfinancemanager.ui.home.MainActivity
@@ -14,6 +17,8 @@ class RegisterActivity : BaseActivity() {
     private lateinit var binding: ActivityRegisterBinding
     private lateinit var viewModel: RegisterViewModel
 
+    private lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
@@ -22,11 +27,11 @@ class RegisterActivity : BaseActivity() {
         viewModel = ViewModelProvider(this)[RegisterViewModel::class.java]
 
         onClick()
+        observer()
     }
 
     private fun doRegister() {
         if (!viewModel.doRegister(
-                binding.editUsername.text.toString(),
                 binding.editEmail.text.toString(),
                 binding.editPassword.text.toString(), this
             )
@@ -35,8 +40,17 @@ class RegisterActivity : BaseActivity() {
                 showToast(it)
             })
         } else {
-            showToast(getString(R.string.success_register))
-            onBackPressed()
+            viewModel.signUpStatus.observe(this, Observer { status ->
+                if (status) {
+                    showToast(getString(R.string.success_register))
+                    onBackPressed()
+                } else {
+                    viewModel.validateError.observe(this, Observer {
+                        showToast(it)
+                    })
+                }
+            })
+
         }
     }
 
@@ -48,5 +62,15 @@ class RegisterActivity : BaseActivity() {
         binding.toolbar.setNavigationOnClickListener {
             finish()
         }
+    }
+
+    private fun observer() {
+        viewModel.loading.observe(this, Observer {
+            if (it) {
+                binding.progressBar.visibility = View.VISIBLE
+            } else {
+                binding.progressBar.visibility = View.GONE
+            }
+        })
     }
 }

@@ -1,6 +1,7 @@
 package com.matheussilas97.myfinancemanager.ui.expense
 
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.matheussilas97.myfinancemanager.databinding.ActivityAddExpenseBinding
@@ -20,6 +21,7 @@ class AddExpenseActivity : BaseActivity() {
         viewModel = ViewModelProvider(this)[ExpenseViewModel::class.java]
 
         onClick()
+        observer()
 
           //  binding.editValue.addTextChangedListener(MoneyMask)
 
@@ -53,5 +55,15 @@ class AddExpenseActivity : BaseActivity() {
         binding.editDate.setOnClickListener {
             openCalendar(binding.editDate, this)
         }
+    }
+
+    private fun observer() {
+        viewModel.loading.observe(this, Observer {
+            if (it) {
+                binding.progressBar.visibility = View.VISIBLE
+            } else {
+                binding.progressBar.visibility = View.GONE
+            }
+        })
     }
 }

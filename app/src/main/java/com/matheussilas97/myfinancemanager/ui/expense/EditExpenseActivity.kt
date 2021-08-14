@@ -2,15 +2,19 @@ package com.matheussilas97.myfinancemanager.ui.expense
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.matheussilas97.myfinancemanager.databinding.ActivityEditExpenseBinding
 import com.matheussilas97.myfinancemanager.util.BaseActivity
+import com.matheussilas97.myfinancemanager.util.Constants
+import kotlin.properties.Delegates
 
 class EditExpenseActivity : BaseActivity() {
 
     private lateinit var binding: ActivityEditExpenseBinding
     private lateinit var viewModel: ExpenseViewModel
+    private var idExpense by Delegates.notNull<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,6 +22,14 @@ class EditExpenseActivity : BaseActivity() {
         setContentView(binding.root)
 
         viewModel = ViewModelProvider(this)[ExpenseViewModel::class.java]
+
+        val data = intent.extras
+        if (data != null) {
+            idExpense = data.getInt(Constants.ID_FINANCE)
+        }
+
+        onClick()
+        observer()
     }
 
     private fun editRevenue() {
@@ -25,7 +37,7 @@ class EditExpenseActivity : BaseActivity() {
         val description = binding.editDescription.text.toString()
         val date = binding.editDate.text.toString()
         val paid = binding.switchPaid.isChecked
-        if (!viewModel.editExpense(value, description, date, paid, this)) {
+        if (!viewModel.editExpense(idExpense, value, description, date, paid, this)) {
             viewModel.validateError.observe(this, Observer {
                 showToast(it)
             })
@@ -38,7 +50,7 @@ class EditExpenseActivity : BaseActivity() {
         }
 
         binding.btnDelete.setOnClickListener {
-            viewModel.deleteExpense()
+            viewModel.deleteExpense(idExpense)
         }
 
         binding.txtCancel.setOnClickListener {
@@ -52,5 +64,15 @@ class EditExpenseActivity : BaseActivity() {
         binding.editDate.setOnClickListener {
             openCalendar(binding.editDate, this)
         }
+    }
+
+    private fun observer() {
+        viewModel.loading.observe(this, Observer {
+            if (it) {
+                binding.progressBar.visibility = View.VISIBLE
+            } else {
+                binding.progressBar.visibility = View.GONE
+            }
+        })
     }
 }

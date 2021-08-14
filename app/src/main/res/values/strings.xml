@@ -25,6 +25,14 @@
     <string name="success_recover">E-mail enviado com sucesso</string>
     <string name="success_register">Usuário criado com sucesso</string>
 
+    <string name="no_result_list">Nenhum registro encontrado</string>
+    <string name="error_recover_password">Erro ao enviar e-mail de recuperação de senha</string>
+
+    <string name="paid">Pago</string>
+    <string name="not_paid">Não pago</string>
+    <string name="not_charged">Não recebido</string>
+    <string name="charged">Recebido</string>
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="email">E-mail</string>
     <string name="password">Senha</string>
@@ -32,6 +40,7 @@
     <string name="forget_password"><u>Esqueci minha senha</u></string>
     <string name="forget_password2">Esqueci minha senha</string>
     <string name="register"><u>Cadatrar</u></string>
+    <string name="register2">Cadatrar</string>
     <string name="username">Nome de usuário</string>
     <string name="digit_your_email">Digite seu e-mail</string>
     <string name="forget_passoword_info">Enviaremos um e-mail para recuperação de senha</string>
@@ -41,6 +50,7 @@
     <string name="save">Salvar</string>
     <string name="delete_revenue">Apagar receita</string>
     <string name="delete_expense">Apagar despesa</string>
+    <string name="logout">Sair</string>
 
 
 </resources>

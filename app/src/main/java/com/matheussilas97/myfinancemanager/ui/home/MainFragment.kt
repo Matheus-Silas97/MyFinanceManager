@@ -3,16 +3,21 @@ package com.matheussilas97.myfinancemanager.ui.home
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.firebase.auth.FirebaseAuth
 import com.matheussilas97.myfinancemanager.R
 import com.matheussilas97.myfinancemanager.databinding.FragmentMainBinding
+import com.matheussilas97.myfinancemanager.ui.login.LoginActivity
+import com.matheussilas97.myfinancemanager.util.BaseActivity
+import com.matheussilas97.myfinancemanager.util.BaseFragment
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-class MainFragment : Fragment() {
+class MainFragment : BaseFragment() {
     private var param1: String? = null
     private var param2: String? = null
 
@@ -33,8 +38,11 @@ class MainFragment : Fragment() {
         binding = FragmentMainBinding.inflate(inflater, container, false)
 
         binding.toolbar.title = "Bem vindo Carlos"
+        binding.toolbar.inflateMenu(R.menu.menu_logout)
 
+        onClick()
         buildViewPager()
+
         return binding.root
     }
 
@@ -50,6 +58,25 @@ class MainFragment : Fragment() {
         }.attach()
     }
 
+    private fun optionsToolbar(it: MenuItem): Boolean {
+        return when (it.itemId) {
+            R.id.ic_logout -> {
+                FirebaseAuth.getInstance().signOut();
+                getNextActivity(LoginActivity::class.java)
+                requireActivity().finishAffinity()
+                true
+            }
+            else -> {
+                false
+            }
+        }
+    }
+
+    private fun onClick() {
+        binding.toolbar.setOnMenuItemClickListener {
+            return@setOnMenuItemClickListener optionsToolbar(it)
+        }
+    }
 
 
     companion object {

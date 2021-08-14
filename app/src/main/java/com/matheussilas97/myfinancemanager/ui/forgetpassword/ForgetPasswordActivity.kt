@@ -2,6 +2,7 @@ package com.matheussilas97.myfinancemanager.ui.forgetpassword
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.matheussilas97.myfinancemanager.R
@@ -22,6 +23,7 @@ class ForgetPasswordActivity : BaseActivity() {
         viewModel = ViewModelProvider(this)[ForgetPasswordViewModel::class.java]
 
         onClick()
+        observer()
 
     }
 
@@ -35,8 +37,15 @@ class ForgetPasswordActivity : BaseActivity() {
                 showToast(it)
             })
         } else {
-            showToast(getString(R.string.success_recover))
-            onBackPressed()
+            viewModel.recoverStatus.observe(this, Observer {
+                if (it) {
+                    showToast(getString(R.string.success_recover))
+                    onBackPressed()
+                } else {
+                    showToast(getString(R.string.error_recover_password))
+                }
+            })
+
         }
     }
 
@@ -48,5 +57,15 @@ class ForgetPasswordActivity : BaseActivity() {
         binding.toolbar.setNavigationOnClickListener {
             onBackPressed()
         }
+    }
+
+    private fun observer() {
+        viewModel.loading.observe(this, Observer {
+            if (it) {
+                binding.progressBar.visibility = View.VISIBLE
+            } else {
+                binding.progressBar.visibility = View.GONE
+            }
+        })
     }
 }

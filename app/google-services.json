@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "85915184962",
+    "project_id": "myfinancemanagerback",
+    "storage_bucket": "myfinancemanagerback.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:85915184962:android:2fa9e5c61b93ce19ace2db",
+        "android_client_info": {
+          "package_name": "com.matheussilas97.myfinancemanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "85915184962-t2volin6ogba32ueuvrgfdktvtss0gln.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlnR-Xv7KvlwKQQ4fURPQMB2x8LvIGeic"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "85915184962-t2volin6ogba32ueuvrgfdktvtss0gln.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

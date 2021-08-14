@@ -1,33 +1,31 @@
-package com.matheussilas97.myfinancemanager.ui.revenue
+package com.matheussilas97.myfinancemanager.ui.expense
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.matheussilas97.myfinancemanager.databinding.ActivityAddRevenueBinding
+import com.matheussilas97.myfinancemanager.databinding.ActivityEditExpenseBinding
 import com.matheussilas97.myfinancemanager.util.BaseActivity
 
-class AddRevenueActivity : BaseActivity() {
+class EditExpenseActivity : BaseActivity() {
 
-    private lateinit var binding: ActivityAddRevenueBinding
-    private lateinit var viewModel: RevenueViewModel
+    private lateinit var binding: ActivityEditExpenseBinding
+    private lateinit var viewModel: ExpenseViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAddRevenueBinding.inflate(layoutInflater)
+        binding = ActivityEditExpenseBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel = ViewModelProvider(this)[RevenueViewModel::class.java]
-
-        onClick()
+        viewModel = ViewModelProvider(this)[ExpenseViewModel::class.java]
     }
 
-    private fun addRevenue() {
+    private fun editRevenue() {
         val value = binding.editValue.text.toString()
         val description = binding.editDescription.text.toString()
         val date = binding.editDate.text.toString()
         val paid = binding.switchPaid.isChecked
-        if (!viewModel.addRevenue(value, description, date, paid, this)) {
+        if (!viewModel.editExpense(value, description, date, paid, this)) {
             viewModel.validateError.observe(this, Observer {
                 showToast(it)
             })
@@ -36,7 +34,11 @@ class AddRevenueActivity : BaseActivity() {
 
     private fun onClick() {
         binding.btnAdd.setOnClickListener {
-            addRevenue()
+            editRevenue()
+        }
+
+        binding.btnDelete.setOnClickListener {
+            viewModel.deleteExpense()
         }
 
         binding.txtCancel.setOnClickListener {

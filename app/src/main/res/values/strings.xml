@@ -2,20 +2,45 @@
     <string name="app_name">My Finance Manager</string>
     <string name="add_expense">Adicionar despesa</string>
     <string name="add_revenue">Adicionar receita</string>
+    <string name="edit_revenue">Editar receita</string>
+    <string name="edit_expense">Editar despesa</string>
     <string name="expense">Despesa</string>
     <string name="revenue">Receita</string>
     <string name="value">Valor</string>
     <string name="description">Descrição</string>
     <string name="date">Data</string>
     <string name="expense_was_paid">Despesa foi paga?</string>
+    <string name="revenue_was_receveid">Receita foi recebida?</string>
     <string name="add">Adicionar</string>
     <string name="cancel">Cancelar</string>
     <string name="cash">R$</string>
 
     <string name="empty_value">Preencha o campo valor</string>
+    <string name="empty_username">Preencha o campo nome do usuário</string>
+    <string name="empty_email">Preencha o campo e-mail</string>
+    <string name="empty_password">Preencha o campo senha</string>
     <string name="empty_description">Preencha o campo valor</string>
     <string name="empty_date">Selecione uma data</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
+    <string name="success_recover">E-mail enviado com sucesso</string>
+    <string name="success_register">Usuário criado com sucesso</string>
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="email">E-mail</string>
+    <string name="password">Senha</string>
+    <string name="login">Entrar</string>
+    <string name="forget_password"><u>Esqueci minha senha</u></string>
+    <string name="forget_password2">Esqueci minha senha</string>
+    <string name="register"><u>Cadatrar</u></string>
+    <string name="username">Nome de usuário</string>
+    <string name="digit_your_email">Digite seu e-mail</string>
+    <string name="forget_passoword_info">Enviaremos um e-mail para recuperação de senha</string>
+    <string name="send">Enviar</string>
+    <string name="graphics">Gráficos</string>
+    <string name="home">Home</string>
+    <string name="save">Salvar</string>
+    <string name="delete_revenue">Apagar receita</string>
+    <string name="delete_expense">Apagar despesa</string>
+
 
 </resources>

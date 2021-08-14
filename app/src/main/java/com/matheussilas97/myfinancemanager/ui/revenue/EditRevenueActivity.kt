@@ -4,17 +4,17 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.matheussilas97.myfinancemanager.databinding.ActivityAddRevenueBinding
+import com.matheussilas97.myfinancemanager.databinding.ActivityEditRevenueBinding
 import com.matheussilas97.myfinancemanager.util.BaseActivity
 
-class AddRevenueActivity : BaseActivity() {
+class EditRevenueActivity : BaseActivity() {
 
-    private lateinit var binding: ActivityAddRevenueBinding
+    private lateinit var binding: ActivityEditRevenueBinding
     private lateinit var viewModel: RevenueViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAddRevenueBinding.inflate(layoutInflater)
+        binding = ActivityEditRevenueBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         viewModel = ViewModelProvider(this)[RevenueViewModel::class.java]
@@ -22,12 +22,12 @@ class AddRevenueActivity : BaseActivity() {
         onClick()
     }
 
-    private fun addRevenue() {
+    private fun editRevenue() {
         val value = binding.editValue.text.toString()
         val description = binding.editDescription.text.toString()
         val date = binding.editDate.text.toString()
         val paid = binding.switchPaid.isChecked
-        if (!viewModel.addRevenue(value, description, date, paid, this)) {
+        if (!viewModel.editRevenue(value, description, date, paid, this)) {
             viewModel.validateError.observe(this, Observer {
                 showToast(it)
             })
@@ -36,7 +36,11 @@ class AddRevenueActivity : BaseActivity() {
 
     private fun onClick() {
         binding.btnAdd.setOnClickListener {
-            addRevenue()
+            editRevenue()
+        }
+
+        binding.btnDelete.setOnClickListener {
+            viewModel.deleteRevenue()
         }
 
         binding.txtCancel.setOnClickListener {

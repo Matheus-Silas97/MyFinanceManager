@@ -35,7 +35,6 @@ class AddExpenseActivity : BaseActivity() {
                 showToast(it)
             })
         }
-
     }
 
     private fun onClick() {

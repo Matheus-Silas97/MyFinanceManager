@@ -1,7 +1,8 @@
 package com.matheussilas97.myfinancemanager.ui.home
 
 import android.os.Bundle
-import com.google.android.material.tabs.TabLayoutMediator
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.matheussilas97.myfinancemanager.R
 import com.matheussilas97.myfinancemanager.databinding.ActivityMainBinding
 import com.matheussilas97.myfinancemanager.ui.expense.AddExpenseActivity
@@ -17,21 +18,11 @@ class MainActivity : BaseActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        buildViewPager()
+        val naviController = findNavController(R.id.nav_host)
+        binding.bottomNavigationView.setupWithNavController(naviController)
+
         onClick()
 
-    }
-
-    private fun buildViewPager() {
-        binding.viewPager.adapter = ViewPagerAdapter(this)
-        TabLayoutMediator(binding.tablayout, binding.viewPager) { tab, position ->
-            if (position == 0) {
-                tab.text = getString(R.string.revenue)
-            } else {
-                tab.text = getString(R.string.expense)
-            }
-
-        }.attach()
     }
 
     private fun onClick() {

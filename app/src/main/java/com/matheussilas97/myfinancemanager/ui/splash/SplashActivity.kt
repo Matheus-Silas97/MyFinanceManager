@@ -10,6 +10,10 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import com.matheussilas97.myfinancemanager.databinding.ActivitySplashBinding
 import com.matheussilas97.myfinancemanager.ui.home.MainActivity
+import com.matheussilas97.myfinancemanager.ui.login.LoginActivity
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class SplashActivity : AppCompatActivity() {
 
@@ -20,23 +24,11 @@ class SplashActivity : AppCompatActivity() {
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        splash()
-    }
-
-    private fun splash() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.insetsController?.hide(WindowInsets.Type.statusBars())
-        } else {
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
-            )
-        }
-
-        Handler(Looper.getMainLooper()).postDelayed({
-            startActivity(Intent(this, MainActivity::class.java))
-
+        GlobalScope.launch {
+            delay(3000)
+            startActivity(Intent(applicationContext, LoginActivity::class.java))
             finish()
-        }, 3000)
+        }
     }
+
 }

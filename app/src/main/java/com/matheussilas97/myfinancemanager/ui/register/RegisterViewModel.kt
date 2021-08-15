@@ -10,6 +10,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.matheussilas97.myfinancemanager.R
+import com.matheussilas97.myfinancemanager.model.RegisterModel
 import com.matheussilas97.myfinancemanager.util.FirebaseConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,6 +22,7 @@ class RegisterViewModel : ViewModel() {
     var loading: MutableLiveData<Boolean> = MutableLiveData()
     var signUpStatus = MutableLiveData<Boolean>()
     private var auth = FirebaseConfig().getFirebaseAutenticacao()
+    private val repo = RegisterRepository()
 
     fun doRegister(email: String, password: String, context: Context): Boolean {
         loading.postValue(true)
@@ -37,7 +39,9 @@ class RegisterViewModel : ViewModel() {
                 auth?.createUserWithEmailAndPassword(email, password)
                     ?.addOnCompleteListener { task: Task<AuthResult> ->
                         if (task.isSuccessful) {
+                            val model = RegisterModel(email, password)
                             signUpStatus.postValue(true)
+                            repo.saveUser(model)
                         } else {
                             try {
                                 throw task.exception!!

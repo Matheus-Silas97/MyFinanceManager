@@ -1,19 +1,29 @@
 package com.matheussilas97.myfinancemanager.model
 
-import java.math.BigDecimal
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 import java.util.*
 
+@Parcelize
 data class FinanceModel(
 
-    val id: Int?,
+    val id: String?,
 
-    val value: BigDecimal,
+    val idUser: String,
 
-    val date: Date,
+    val value: Double,
+
+    val date: String,
 
     val description: String,
 
     val situation: Boolean,
 
     val type: String
-)
+) : Parcelable {
+
+    constructor() : this("", "", 0.0, "", "", false, "")
+
+}
+
+

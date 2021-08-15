@@ -23,7 +23,15 @@
     <string name="empty_date">Selecione uma data</string>
 
     <string name="success_recover">E-mail enviado com sucesso</string>
+    <string name="success_delete">Registro removido com sucesso</string>
+    <string name="success_expense">Despesa adicionada com sucesso</string>
+    <string name="success_expense_update">Despesa atualizada com sucesso</string>
+    <string name="success_revenue_update">Receita atualizada com sucesso</string>
+    <string name="success_revenue_delete">Receita atualizada com sucesso</string>
+    <string name="success_revenue">Receita adicionada com sucesso</string>
     <string name="success_register">Usuário criado com sucesso</string>
+
+    <string name="error">Um erro inesperado aconteceu</string>
 
     <string name="no_result_list">Nenhum registro encontrado</string>
     <string name="error_recover_password">Erro ao enviar e-mail de recuperação de senha</string>
@@ -39,18 +47,20 @@
     <string name="login">Entrar</string>
     <string name="forget_password"><u>Esqueci minha senha</u></string>
     <string name="forget_password2">Esqueci minha senha</string>
-    <string name="register"><u>Cadatrar</u></string>
+    <string name="register"><u>Cadatrar-se</u></string>
     <string name="register2">Cadatrar</string>
     <string name="username">Nome de usuário</string>
     <string name="digit_your_email">Digite seu e-mail</string>
     <string name="forget_passoword_info">Enviaremos um e-mail para recuperação de senha</string>
     <string name="send">Enviar</string>
     <string name="graphics">Gráficos</string>
+    <string name="reports">Relatórios</string>
     <string name="home">Home</string>
     <string name="save">Salvar</string>
     <string name="delete_revenue">Apagar receita</string>
     <string name="delete_expense">Apagar despesa</string>
     <string name="logout">Sair</string>
+    <string name="statitics">Estatísticas</string>
 
 
 </resources>

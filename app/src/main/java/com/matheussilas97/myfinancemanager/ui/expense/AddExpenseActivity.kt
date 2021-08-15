@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.matheussilas97.myfinancemanager.R
 import com.matheussilas97.myfinancemanager.databinding.ActivityAddExpenseBinding
 import com.matheussilas97.myfinancemanager.util.BaseActivity
 import com.matheussilas97.myfinancemanager.util.MoneyMask
@@ -23,8 +24,6 @@ class AddExpenseActivity : BaseActivity() {
         onClick()
         observer()
 
-          //  binding.editValue.addTextChangedListener(MoneyMask)
-
     }
 
     private fun addExpense() {
@@ -35,6 +34,17 @@ class AddExpenseActivity : BaseActivity() {
         if (!viewModel.addExpense(value, description, date, paid, this)) {
             viewModel.validateError.observe(this, Observer {
                 showToast(it)
+            })
+        } else {
+            viewModel.expenseStatus.observe(this, Observer { data ->
+                if (data) {
+                    showToast(getString(R.string.success_expense))
+                    onBackPressed()
+                } else {
+                    viewModel.validateError.observe(this, Observer {
+                        showToast(it)
+                    })
+                }
             })
         }
     }

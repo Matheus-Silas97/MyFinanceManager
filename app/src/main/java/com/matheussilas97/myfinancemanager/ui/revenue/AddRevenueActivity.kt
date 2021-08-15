@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.matheussilas97.myfinancemanager.R
 import com.matheussilas97.myfinancemanager.databinding.ActivityAddRevenueBinding
 import com.matheussilas97.myfinancemanager.util.BaseActivity
 
@@ -32,6 +33,17 @@ class AddRevenueActivity : BaseActivity() {
         if (!viewModel.addRevenue(value, description, date, paid, this)) {
             viewModel.validateError.observe(this, Observer {
                 showToast(it)
+            })
+        }else {
+            viewModel.expenseStatus.observe(this, Observer { data ->
+                if (data) {
+                    showToast(getString(R.string.success_revenue))
+                    onBackPressed()
+                } else {
+                    viewModel.validateError.observe(this, Observer {
+                        showToast(it)
+                    })
+                }
             })
         }
     }

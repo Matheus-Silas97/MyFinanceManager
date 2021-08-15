@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.matheussilas97.myfinancemanager.R
 import com.matheussilas97.myfinancemanager.databinding.FragmentRevenueBinding
+import com.matheussilas97.myfinancemanager.model.FinanceModel
 import com.matheussilas97.myfinancemanager.ui.expense.EditExpenseActivity
 import com.matheussilas97.myfinancemanager.ui.revenue.EditRevenueActivity
 import com.matheussilas97.myfinancemanager.util.BaseFragment
@@ -49,16 +50,17 @@ class RevenueFragment : BaseFragment() {
 
 
     private fun buildRevenueList() {
-        viewModel.revenueList()?.observe(requireActivity(), Observer { data ->
+        viewModel.revenueList().observe(requireActivity(), Observer { data ->
             if (!data.isNullOrEmpty()) {
                 val adapter = FinanceAdapter()
                 binding.recyclerRevenue.layoutManager = LinearLayoutManager(context)
                 binding.recyclerRevenue.adapter = adapter
                 adapter.setList(data)
                 adapter.addOnItemClickListener(object : FinanceAdapter.OnItemClickListener {
-                    override fun onClick(id: Int) {
+                    override fun onClick(id: String, model: FinanceModel) {
                         val intent = Intent(requireContext(), EditRevenueActivity::class.java)
                         intent.putExtra(Constants.ID_FINANCE, id)
+                        intent.putExtra(Constants.MODEL_FINANCE, model)
                         startActivity(intent)
                     }
                 })

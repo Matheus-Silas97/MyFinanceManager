@@ -1,20 +1,26 @@
 package com.matheussilas97.myfinancemanager.ui.expense
 
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.matheussilas97.myfinancemanager.R
 import com.matheussilas97.myfinancemanager.databinding.ActivityEditExpenseBinding
+import com.matheussilas97.myfinancemanager.model.FinanceModel
 import com.matheussilas97.myfinancemanager.util.BaseActivity
 import com.matheussilas97.myfinancemanager.util.Constants
+import com.matheussilas97.myfinancemanager.util.FirebaseConfig
 import kotlin.properties.Delegates
 
 class EditExpenseActivity : BaseActivity() {
 
     private lateinit var binding: ActivityEditExpenseBinding
     private lateinit var viewModel: ExpenseViewModel
-    private var idExpense by Delegates.notNull<Int>()
+    private lateinit var idExpense: String
+    private lateinit var model: FinanceModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +31,13 @@ class EditExpenseActivity : BaseActivity() {
 
         val data = intent.extras
         if (data != null) {
-            idExpense = data.getInt(Constants.ID_FINANCE)
+            idExpense = data.getString(Constants.ID_FINANCE, "")
+            model = data.getParcelable<FinanceModel>(Constants.MODEL_FINANCE)!!
+
+            binding.editValue.setText(model.value.toString())
+            binding.editDate.setText(model.date)
+            binding.editDescription.setText(model.description)
+            binding.switchPaid.isChecked = model.situation
         }
 
         onClick()
@@ -41,6 +53,18 @@ class EditExpenseActivity : BaseActivity() {
             viewModel.validateError.observe(this, Observer {
                 showToast(it)
             })
+        }else{
+            viewModel.expenseStatus.observe(this, Observer {
+                    data ->
+                if (data) {
+                    showToast(getString(R.string.success_expense_update))
+                    onBackPressed()
+                } else {
+                    viewModel.validateError.observe(this, Observer {
+                        showToast(it)
+                    })
+                }
+            })
         }
     }
 
@@ -50,7 +74,7 @@ class EditExpenseActivity : BaseActivity() {
         }
 
         binding.btnDelete.setOnClickListener {
-            viewModel.deleteExpense(idExpense)
+            deleteFinance()
         }
 
         binding.txtCancel.setOnClickListener {
@@ -64,6 +88,29 @@ class EditExpenseActivity : BaseActivity() {
         binding.editDate.setOnClickListener {
             openCalendar(binding.editDate, this)
         }
+    }
+
+    private fun deleteFinance() {
+        val alertDialog = android.app.AlertDialog.Builder(this).create()
+        alertDialog.setTitle("Deletar")
+        alertDialog.setMessage("Deseja apagar essa despesa?")
+        alertDialog.setButton(
+            AlertDialog.BUTTON_POSITIVE,
+            "Apagar",
+            DialogInterface.OnClickListener { dialogInterface, i ->
+                viewModel.deleteExpense(idExpense).observe(this, Observer {
+                    if (it) {
+                        showToast(getString(R.string.success_delete))
+                        onBackPressed()
+                    } else {
+                        showToast(getString(R.string.error))
+                    }
+                })
+            })
+        alertDialog.setButton(
+            AlertDialog.BUTTON_NEUTRAL, "Cancelar",
+            DialogInterface.OnClickListener { dialog, which -> dialog.dismiss() })
+        alertDialog.show()
     }
 
     private fun observer() {

@@ -28,6 +28,10 @@ class FinanceAdapter() : RecyclerView.Adapter<FinanceAdapter.FinanceViewHolder>(
     override fun onBindViewHolder(holder: FinanceViewHolder, position: Int) {
         val m = mList[position]
 
+        val format = Decimal
+//        val decimalFormat: DecimalF = java.text.DecimalFormat("0.##")
+//        val resultadoFormatado: kotlin.String? = decimalFormat.format(resumoUsuario)
+
         holder.value.text = "R$${m.value}"
         holder.date.text = m.date.toString()
         holder.description.text = m.description
@@ -38,7 +42,7 @@ class FinanceAdapter() : RecyclerView.Adapter<FinanceAdapter.FinanceViewHolder>(
                     holder.situation.text = "Pago"
                 }
                 else -> {
-                    holder.situation.text = "Não pago"
+                    holder.situation.text = "Pendente"
                 }
             }
         } else {
@@ -47,13 +51,13 @@ class FinanceAdapter() : RecyclerView.Adapter<FinanceAdapter.FinanceViewHolder>(
                     holder.situation.text = "Recebido"
                 }
                 else -> {
-                    holder.situation.text = "Não recebido"
+                    holder.situation.text = "Pendente"
                 }
             }
         }
 
         holder.card.setOnClickListener {
-            m.id?.let { it1 -> onItemClickLister?.onClick(it1) }
+            onItemClickLister?.onClick(m.id!!, m)
         }
 
 
@@ -67,7 +71,7 @@ class FinanceAdapter() : RecyclerView.Adapter<FinanceAdapter.FinanceViewHolder>(
     }
 
     interface OnItemClickListener {
-        fun onClick(id: Int)
+        fun onClick(id: String, model: FinanceModel)
     }
 
     private var onItemClickLister: OnItemClickListener? = null

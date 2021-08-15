@@ -4,8 +4,6 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.AuthResult
 import com.matheussilas97.myfinancemanager.R
 import com.matheussilas97.myfinancemanager.util.FirebaseConfig
 import kotlinx.coroutines.Dispatchers
@@ -26,7 +24,7 @@ class ForgetPasswordViewModel : ViewModel() {
             return false
         } else {
             viewModelScope.launch(Dispatchers.IO) {
-                auth?.sendPasswordResetEmail(email)?.addOnCompleteListener { task: Task<Void> ->
+                auth?.sendPasswordResetEmail(email)?.addOnCompleteListener { task: com.google.android.gms.tasks.Task<Void> ->
                     if (task.isSuccessful) {
                         recoverStatus.postValue(true)
                     } else {

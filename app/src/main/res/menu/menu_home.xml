@@ -9,6 +9,6 @@
     <item
         android:id="@+id/graphic_fragment"
         android:icon="@drawable/ic_graph"
-        android:title="@string/graphics" />
+        android:title="@string/reports" />
 
 </menu>

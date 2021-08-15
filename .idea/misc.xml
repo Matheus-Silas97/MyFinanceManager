@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Documents/Projetos Android/MyFinanceManager/app/src/main/res/drawable/shape_card.xml" value="0.1574074074074074" />
         <entry key="..\:/Documents/Projetos Android/MyFinanceManager/app/src/main/res/layout/activity_add_expense.xml" value="0.20416666666666666" />
         <entry key="..\:/Documents/Projetos Android/MyFinanceManager/app/src/main/res/layout/activity_add_revenue.xml" value="0.20416666666666666" />
         <entry key="..\:/Documents/Projetos Android/MyFinanceManager/app/src/main/res/layout/activity_edit_expense.xml" value="0.20416666666666666" />

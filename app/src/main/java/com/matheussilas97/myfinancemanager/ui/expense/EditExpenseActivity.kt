@@ -53,9 +53,8 @@ class EditExpenseActivity : BaseActivity() {
             viewModel.validateError.observe(this, Observer {
                 showToast(it)
             })
-        }else{
-            viewModel.expenseStatus.observe(this, Observer {
-                    data ->
+        } else {
+            viewModel.expenseStatus.observe(this, Observer { data ->
                 if (data) {
                     showToast(getString(R.string.success_expense_update))
                     onBackPressed()
@@ -92,8 +91,8 @@ class EditExpenseActivity : BaseActivity() {
 
     private fun deleteFinance() {
         val alertDialog = android.app.AlertDialog.Builder(this).create()
-        alertDialog.setTitle("Deletar")
-        alertDialog.setMessage("Deseja apagar essa despesa?")
+        alertDialog.setTitle(R.string.delete_question)
+        alertDialog.setMessage(getString(R.string.delete_expense_question))
         alertDialog.setButton(
             AlertDialog.BUTTON_POSITIVE,
             "Apagar",
@@ -108,7 +107,7 @@ class EditExpenseActivity : BaseActivity() {
                 })
             })
         alertDialog.setButton(
-            AlertDialog.BUTTON_NEUTRAL, "Cancelar",
+            AlertDialog.BUTTON_NEUTRAL, getString(R.string.cancel),
             DialogInterface.OnClickListener { dialog, which -> dialog.dismiss() })
         alertDialog.show()
     }

@@ -44,20 +44,20 @@ class FinanceAdapter(val context: Context) :
             holder.value.setTextColor(ContextCompat.getColor(context, R.color.red))
             when (m.situation) {
                 true -> {
-                    holder.situation.text = "Pago"
+                    holder.situation.text = context.getString(R.string.paid)
                 }
                 else -> {
-                    holder.situation.text = "Pendente"
+                    holder.situation.text = context.getString(R.string.pending)
                 }
             }
         } else {
             holder.value.setTextColor(ContextCompat.getColor(context, R.color.green))
             when (m.situation) {
                 true -> {
-                    holder.situation.text = "Recebido"
+                    holder.situation.text = context.getString(R.string.charged)
                 }
                 else -> {
-                    holder.situation.text = "Pendente"
+                    holder.situation.text = context.getString(R.string.pending)
                 }
             }
         }

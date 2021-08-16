@@ -90,11 +90,11 @@ class EditRevenueActivity : BaseActivity() {
 
     private fun deleteFinance() {
         val alertDialog = android.app.AlertDialog.Builder(this).create()
-        alertDialog.setTitle("Deletar")
-        alertDialog.setMessage("Deseja apagar essa receita?")
+        alertDialog.setTitle(R.string.delete_question)
+        alertDialog.setMessage(getString(R.string.delete_revenue_question))
         alertDialog.setButton(
             AlertDialog.BUTTON_POSITIVE,
-            "Apagar",
+            getString(R.string.delete),
             DialogInterface.OnClickListener { dialogInterface, i ->
                 viewModel.deleteRevenue(idRevenue).observe(this, Observer {
                     if (it) {
@@ -106,7 +106,7 @@ class EditRevenueActivity : BaseActivity() {
                 })
             })
         alertDialog.setButton(
-            AlertDialog.BUTTON_NEUTRAL, "Cancelar",
+            AlertDialog.BUTTON_NEUTRAL, getString(R.string.cancel),
             DialogInterface.OnClickListener
             { dialog, which -> dialog.dismiss() })
         alertDialog.show()

@@ -40,6 +40,7 @@
     <string name="not_paid">Não pago</string>
     <string name="not_charged">Não recebido</string>
     <string name="charged">Recebido</string>
+    <string name="pending">pendente</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="email">E-mail</string>
@@ -61,6 +62,10 @@
     <string name="delete_expense">Apagar despesa</string>
     <string name="logout">Sair</string>
     <string name="statitics">Estatísticas</string>
+    <string name="delete_question">Deletar?</string>
+    <string name="delete_expense_question">Deseja apagar essa despesa?</string>
+    <string name="delete_revenue_question">Deseja apagar essa revenue?</string>
+    <string name="delete">Apagar</string>
 
 
 </resources>

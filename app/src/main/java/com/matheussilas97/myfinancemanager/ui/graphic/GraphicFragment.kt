@@ -7,8 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.anychart.AnyChart
+import com.anychart.chart.common.dataentry.DataEntry
+import com.anychart.chart.common.dataentry.ValueDataEntry
+import com.anychart.enums.Align
+import com.anychart.enums.LegendLayout
 import com.matheussilas97.myfinancemanager.R
 import com.matheussilas97.myfinancemanager.databinding.FragmentGraphicBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.bind
 
 private const val ARG_PARAM1 = "param1"
@@ -38,10 +47,34 @@ class GraphicFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(StatisticViewModel::class.java)
 
         setInfo()
-
+        setPie()
         return binding.root
     }
 
+    private fun setPie() {
+        CoroutineScope(Dispatchers.Main).launch {
+            delay(2000)
+            val pie = AnyChart.pie()
+
+            val listData = ArrayList<DataEntry>()
+            listData.add(ValueDataEntry("Despesas pagas", viewModel.totalExpensePaid))
+            listData.add(ValueDataEntry("Despesas não pagas", viewModel.totalExpenseNotPaid))
+            listData.add(ValueDataEntry("Receitas recebidas", viewModel.totalRevenueReceveid))
+            listData.add(
+                ValueDataEntry(
+                    "Receitas não recebidas",
+                    viewModel.totalRevenueNotReceveid
+                )
+            )
+
+            pie.data(listData)
+            pie.legend().position("center-bottom")
+                .itemsLayout(LegendLayout.VERTICAL)
+                .align(Align.LEFT);
+
+            binding.anyChartView.setChart(pie)
+        }
+    }
 
 
     private fun setInfo() {

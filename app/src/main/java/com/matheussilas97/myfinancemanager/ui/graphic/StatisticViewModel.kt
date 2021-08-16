@@ -12,13 +12,22 @@ class StatisticViewModel : ViewModel() {
     private val repoExpense = ExpenseRepository()
     private val repoRevenue = RevenueRepository()
 
+    var totalExpensePaid: Double = 0.0
+    var totalExpenseNotPaid: Double = 0.0
+    var totalRevenueReceveid: Double = 0.0
+    var totalRevenueNotReceveid: Double = 0.0
+
     fun expenseList(): MutableLiveData<List<FinanceModel>> {
         val list = MutableLiveData<List<FinanceModel>>()
         repoExpense.getAllExpense()?.addSnapshotListener { value, error ->
             value?.toObjects(FinanceModel::class.java)?.let { it ->
                 list.value = it
+                totalExpensePaid = calculateValueTotal(it, true)
+                totalExpenseNotPaid = calculateValueTotal(it, false)
             }
         }
+
+
         return list
     }
 
@@ -27,8 +36,20 @@ class StatisticViewModel : ViewModel() {
         repoRevenue.getAllRevenue()?.addSnapshotListener { value, error ->
             value?.toObjects(FinanceModel::class.java)?.let { it ->
                 list.value = it
+                totalRevenueReceveid = calculateValueTotal(it, true)
+                totalRevenueNotReceveid = calculateValueTotal(it, false)
             }
         }
         return list
+    }
+
+    private fun calculateValueTotal(list: List<FinanceModel>, finalized: Boolean): Double {
+        var total = 0.0
+        list.forEach {
+            if (it.situation == finalized) {
+                total += it.value
+            }
+        }
+        return total
     }
 }

@@ -42,6 +42,8 @@ class GraphicFragment : Fragment() {
         return binding.root
     }
 
+
+
     private fun setInfo() {
         viewModel.expenseList().observe(requireActivity(), Observer { data ->
             binding.totalExpense.text = "Total despesas: ${data.size} "

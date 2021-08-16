@@ -1,6 +1,7 @@
 package com.matheussilas97.myfinancemanager.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -14,11 +15,16 @@ import com.matheussilas97.myfinancemanager.databinding.FragmentMainBinding
 import com.matheussilas97.myfinancemanager.model.FinanceModel
 import com.matheussilas97.myfinancemanager.ui.login.LoginActivity
 import com.matheussilas97.myfinancemanager.util.BaseFragment
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 class MainFragment : BaseFragment() {
+
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var revenueList: List<FinanceModel>
@@ -46,19 +52,73 @@ class MainFragment : BaseFragment() {
 
         onClick()
         buildViewPager()
-        infoList()
+        infoList(binding)
 
         return binding.root
     }
 
-    private fun infoList() {
+    private fun infoList(binding: FragmentMainBinding) {
         viewModel.expenseList().observe(requireActivity(), Observer {
-            expenseList = it
+            if (!it.isNullOrEmpty()) {
+                expenseList = it
+                binding.txtExpense.text = "R$${calculateExpenseTotal()}"
+            } else {
+                binding.txtExpense.text = "R$0.00"
+            }
         })
 
-        viewModel.revenueList().observe(this, Observer {
-            revenueList = it
+        viewModel.revenueList().observe(requireActivity(), Observer {
+            if (!it.isNullOrEmpty()) {
+                revenueList = it
+                binding.txtRevenue.text = "R$${calculateRevenueTotal()}"
+            } else {
+                binding.txtExpense.text = "R$0.00"
+
+            }
         })
+
+        CoroutineScope(Dispatchers.Main).launch {
+            delay(2000)
+            if (::expenseList.isInitialized || ::revenueList.isInitialized) {
+                infoTotal(binding)
+            }
+        }
+
+
+    }
+
+    private fun calculateExpenseTotal(): Double {
+        var expenseSum = 0.0
+        expenseList.forEach {
+            if (it.situation) {
+                expenseSum += it.value
+            }
+        }
+        Log.i("teste", expenseSum.toString())
+        return expenseSum
+    }
+
+    private fun calculateRevenueTotal(): Double {
+        var revenueSum = 0.0
+        revenueList.forEach {
+            if (it.situation) {
+                revenueSum += it.value
+            }
+        }
+        return revenueSum
+    }
+
+    private fun infoTotal(binding: FragmentMainBinding) {
+        if (calculateExpenseTotal() != null && calculateRevenueTotal() != null) {
+            val result = calculateRevenueTotal() - calculateExpenseTotal()
+            binding.txtTotal.text = "Total: R$$result"
+        } else if (calculateExpenseTotal() != null && calculateRevenueTotal() == null) {
+            binding.txtTotal.text = "Total: R$${calculateExpenseTotal()}"
+        } else if (calculateRevenueTotal() != null && calculateExpenseTotal() == null) {
+            binding.txtTotal.text = "Total: R$${calculateRevenueTotal()}"
+        } else {
+            binding.txtTotal.text = "Total: R$0.00"
+        }
     }
 
 
@@ -93,30 +153,6 @@ class MainFragment : BaseFragment() {
             return@setOnMenuItemClickListener optionsToolbar(it)
         }
     }
-
-    private fun setupResumeCard() {
-        val expensesValue = expenseList.fold(0L) { acc, item ->
-            var res = acc
-
-            if (!item.situation) res += item.value
-
-            res
-        }
-        val revenueValue = revenueList.fold(0L) { acc, item ->
-            var res = acc
-
-            if (item.situation) res +=  item.value
-
-            res
-        }
-        val result = revenueValue - expensesValue
-
-        binding.txtValueTotal.text = "Saldo total: R$$result"
-        binding.txtExpense.text = "Total Despesas: R$${expensesValue.toDouble()}"
-        binding.txtRevenue.text ="Total Receitas: R$${revenueValue.toDouble()}"
-
-    }
-
 
     companion object {
         @JvmStatic

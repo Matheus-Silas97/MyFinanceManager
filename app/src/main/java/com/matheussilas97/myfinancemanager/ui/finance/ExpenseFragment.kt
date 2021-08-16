@@ -56,7 +56,7 @@ class ExpenseFragment : BaseFragment() {
                     requireContext()
                 )
             } else {
-                val adapter = FinanceAdapter()
+                val adapter = FinanceAdapter(requireContext())
                 binding.recyclerExpense.layoutManager = LinearLayoutManager(context)
                 binding.recyclerExpense.adapter = adapter
                 adapter.setList(data)

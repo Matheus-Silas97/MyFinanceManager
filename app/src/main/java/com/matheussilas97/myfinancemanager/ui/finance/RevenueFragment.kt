@@ -52,7 +52,7 @@ class RevenueFragment : BaseFragment() {
     private fun buildRevenueList() {
         viewModel.revenueList().observe(requireActivity(), Observer { data ->
             if (!data.isNullOrEmpty()) {
-                val adapter = FinanceAdapter()
+                val adapter = FinanceAdapter(requireContext())
                 binding.recyclerRevenue.layoutManager = LinearLayoutManager(context)
                 binding.recyclerRevenue.adapter = adapter
                 adapter.setList(data)

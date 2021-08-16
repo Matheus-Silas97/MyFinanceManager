@@ -11,8 +11,6 @@ class HomeViewModel : ViewModel() {
     private val repoExpense = ExpenseRepository()
     private val repoRevenue = RevenueRepository()
 
-
-
     fun expenseList(): MutableLiveData<List<FinanceModel>> {
         val list = MutableLiveData<List<FinanceModel>>()
         repoExpense.getAllExpense()?.addSnapshotListener { value, error ->

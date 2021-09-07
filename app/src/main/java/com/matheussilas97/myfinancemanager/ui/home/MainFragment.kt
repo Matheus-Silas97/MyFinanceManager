@@ -19,6 +19,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.text.DecimalFormat
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -27,8 +28,9 @@ class MainFragment : BaseFragment() {
 
     private var param1: String? = null
     private var param2: String? = null
-    private lateinit var revenueList: List<FinanceModel>
-    private lateinit var expenseList: List<FinanceModel>
+    private var revenueList: List<FinanceModel> = listOf()
+    private var expenseList: List<FinanceModel> = listOf()
+
 
     private lateinit var binding: FragmentMainBinding
     private lateinit var viewModel: HomeViewModel
@@ -52,16 +54,22 @@ class MainFragment : BaseFragment() {
 
         onClick()
         buildViewPager()
-        infoList(binding)
+
 
         return binding.root
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        infoList(binding)
     }
 
     private fun infoList(binding: FragmentMainBinding) {
         viewModel.expenseList().observe(requireActivity(), Observer {
             if (!it.isNullOrEmpty()) {
                 expenseList = it
-                binding.txtExpense.text = "R$${calculateExpenseTotal()}"
+                binding.txtExpense.text = formatCurrency(requireContext(), calculateExpenseTotal())
             } else {
                 binding.txtExpense.text = "R$0.00"
             }
@@ -70,7 +78,7 @@ class MainFragment : BaseFragment() {
         viewModel.revenueList().observe(requireActivity(), Observer {
             if (!it.isNullOrEmpty()) {
                 revenueList = it
-                binding.txtRevenue.text = "R$${calculateRevenueTotal()}"
+                binding.txtRevenue.text = formatCurrency(requireContext(), calculateRevenueTotal())
             } else {
                 binding.txtExpense.text = "R$0.00"
 
@@ -78,13 +86,9 @@ class MainFragment : BaseFragment() {
         })
 
         CoroutineScope(Dispatchers.Main).launch {
-            delay(2000)
-            if (::expenseList.isInitialized || ::revenueList.isInitialized) {
-                infoTotal(binding)
-            }
+            delay(1000)
+            infoTotal(binding)
         }
-
-
     }
 
     private fun calculateExpenseTotal(): Double {
@@ -111,11 +115,12 @@ class MainFragment : BaseFragment() {
     private fun infoTotal(binding: FragmentMainBinding) {
         if (calculateExpenseTotal() != null && calculateRevenueTotal() != null) {
             val result = calculateRevenueTotal() - calculateExpenseTotal()
-            binding.txtTotal.text = "Total: R$$result"
+
+            binding.txtTotal.text = "Total: ${formatCurrency(requireContext(),result)}"
         } else if (calculateExpenseTotal() != null && calculateRevenueTotal() == null) {
-            binding.txtTotal.text = "Total: R$${calculateExpenseTotal()}"
+            binding.txtTotal.text = "Total: R$${formatCurrency(requireContext(),calculateExpenseTotal())}"
         } else if (calculateRevenueTotal() != null && calculateExpenseTotal() == null) {
-            binding.txtTotal.text = "Total: R$${calculateRevenueTotal()}"
+            binding.txtTotal.text = "Total: R$${formatCurrency(requireContext(),calculateRevenueTotal())}"
         } else {
             binding.txtTotal.text = "Total: R$0.00"
         }

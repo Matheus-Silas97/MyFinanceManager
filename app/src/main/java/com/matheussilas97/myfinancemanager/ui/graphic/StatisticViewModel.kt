@@ -27,7 +27,6 @@ class StatisticViewModel : ViewModel() {
             }
         }
 
-
         return list
     }
 

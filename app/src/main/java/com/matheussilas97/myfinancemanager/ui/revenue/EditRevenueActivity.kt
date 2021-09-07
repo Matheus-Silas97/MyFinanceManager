@@ -31,7 +31,7 @@ class EditRevenueActivity : BaseActivity() {
         val data = intent.extras
         if (data != null) {
             idRevenue = data.getString(Constants.ID_FINANCE, "")
-            model = data.getParcelable<FinanceModel>(Constants.MODEL_FINANCE)!!
+            model = data.getSerializable(Constants.MODEL_FINANCE) as FinanceModel
 
             binding.editValue.setText(model.value.toString())
             binding.editDate.setText(model.date)

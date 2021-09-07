@@ -44,7 +44,7 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     fun openCalendar(editText: EditText, context: Context){
-        var cal = Calendar.getInstance()
+        val cal = Calendar.getInstance()
 
         val dateSetListener = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
             cal.set(Calendar.YEAR, year)

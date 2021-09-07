@@ -48,13 +48,13 @@ class LoginViewModel : ViewModel() {
                                 throw task.exception!!
                             } catch (e: FirebaseAuthInvalidUserException) {
                                 signInStatus.postValue(false)
-                                validateError.postValue("Usuário não está cadastrado")
+                                validateError.postValue(context.getString(R.string.user_not_found))
                             } catch (e: FirebaseAuthInvalidCredentialsException) {
                                 signInStatus.postValue(false)
-                                validateError.postValue("E-mail e senha não correspondem a um usuário cadastrado")
+                                validateError.postValue(context.getString(R.string.email_password_not_found))
                             } catch (e: Exception) {
                                 signInStatus.postValue(false)
-                                validateError.postValue("Erro ao cadastrar usuário: " + e.message)
+                                validateError.postValue(context.getString(R.string.error_register) + e.message)
                                 e.printStackTrace()
                             }
                         }

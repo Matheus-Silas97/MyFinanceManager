@@ -1,6 +1,7 @@
 package com.matheussilas97.myfinancemanager.ui.finance
 
 import android.content.Context
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -8,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.matheussilas97.myfinancemanager.R
 import com.matheussilas97.myfinancemanager.databinding.ItemDetailBinding
 import com.matheussilas97.myfinancemanager.model.FinanceModel
-import java.text.DecimalFormat
+import java.text.NumberFormat
 
 class FinanceAdapter(val context: Context) :
     RecyclerView.Adapter<FinanceAdapter.FinanceViewHolder>() {
@@ -33,11 +34,8 @@ class FinanceAdapter(val context: Context) :
     override fun onBindViewHolder(holder: FinanceViewHolder, position: Int) {
         val m = mList[position]
 
-        val formatDecimal = DecimalFormat("0.##")
-        val resultValue = formatDecimal.format(m.value)
-
-        holder.value.text = "R$$resultValue"
-        holder.date.text = m.date.toString()
+        holder.value.text = formatCurrency(context, m.value)
+        holder.date.text = m.date
         holder.description.text = m.description
 
         if (m.type == "Expense") {
@@ -84,5 +82,14 @@ class FinanceAdapter(val context: Context) :
 
     fun addOnItemClickListener(onItemClickListener: OnItemClickListener) {
         this.onItemClickLister = onItemClickListener
+    }
+
+    fun formatCurrency(context: Context, value: Double): String? {
+        val currencyInstance: NumberFormat = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            NumberFormat.getCurrencyInstance(
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) context.resources.configuration.locales[0] else context.resources.configuration.locale
+            )
+        } else NumberFormat.getCurrencyInstance()
+        return currencyInstance.format(value)
     }
 }

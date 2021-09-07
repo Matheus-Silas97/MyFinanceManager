@@ -1,10 +1,7 @@
 package com.matheussilas97.myfinancemanager.model
 
-import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
-import java.util.*
+import java.io.Serializable
 
-@Parcelize
 data class FinanceModel(
 
     val id: String?,
@@ -20,7 +17,8 @@ data class FinanceModel(
     val situation: Boolean,
 
     val type: String
-) : Parcelable {
+
+) : Serializable {
 
     constructor() : this("", "", 0.0, "", "", false, "")
 

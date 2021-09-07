@@ -66,6 +66,9 @@
     <string name="delete_expense_question">Deseja apagar essa despesa?</string>
     <string name="delete_revenue_question">Deseja apagar essa revenue?</string>
     <string name="delete">Apagar</string>
+    <string name="user_not_found">Usuário não está cadastrado</string>
+    <string name="email_password_not_found">E-mail e senha não correspondem a um usuário cadastrado</string>
+    <string name="error_register">Erro ao cadastrar usuário: </string>
 
 
 </resources>
